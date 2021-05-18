@@ -1,6 +1,25 @@
 const express = require( "express" );
 const app = express();
-const port = 8080; // default port to listen
+const dotenv = require('dotenv');
+const cors = require('cors');
+const helmet = require('helmet');
+const { itemsRouter } = require('./api/routes/items.router')
+const { errorHandler } = require('./api/middleware/error.middleware');
+const { notFoundHandler } = require('./api/middleware/not-found.middleware');
+
+dotenv.config();
+
+if(!process.env.PORT) {
+    process.exit(1);
+}
+
+const port: number = parseInt(process.env.PORT as string, 10);
+
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
+app.use(errorHandler);
+app.use(notFoundHandler);
 
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
@@ -12,6 +31,8 @@ console.log(process.env.NODE_ENV)
 console.log(process.env.DB_HOST)
 
 app.use(express.static("build"))
+
+app.use("/api/menu/items", itemsRouter);
 
 // define a route handler for the default home page
 app.get( "/", ( req : any , res : any ) => {
