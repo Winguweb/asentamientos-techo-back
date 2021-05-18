@@ -3,6 +3,9 @@ import knex from './db'
 const express = require( "express" );
 const app = express();
 const port = 8080; // default port to listen
+
+app.use(express.static("build"))
+
 // define a route handler for the default home page
 app.get( "/", ( req : any , res : any ) => {
     res.send( "Hello world" );
