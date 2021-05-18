@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --project ./",
     "dev": "nodemon",
-    "start": "node --experimental-modules build/index.js",
+    "start": "node build/index.js",
     "postinstall": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
