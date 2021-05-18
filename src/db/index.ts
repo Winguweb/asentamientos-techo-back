@@ -1,6 +1,6 @@
 console.log('db')
 console.log(process.env.NODE_ENV)
-console.log(process.env.DB_HOST)
+console.log(process.env.DATABASE_URL)
 
 
 const environment = process.env.ENVIRONMENT || 'development'
