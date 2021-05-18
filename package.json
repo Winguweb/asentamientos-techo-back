@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc --project ./",
+    "build": "tsc",
     "dev": "nodemon",
-    "start": "npm run build && node ./build/index.js --env=production",
+    "start": "node build/index.js",
+    "postinstall": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
