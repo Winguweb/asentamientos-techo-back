@@ -1,12 +1,4 @@
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
-
-const pg = require('pg');
-pg.defaults.ssl = true;
-
-
 module.exports = {
 
   development: {
@@ -27,16 +19,10 @@ module.exports = {
   },
 
   staging: {
-    client: "postgresql",
+    client: "pg",
     connection: {
-      host : process.env.DB_HOST,
-      user : process.env.DB_USER,
-      password : process.env.DB_PASS,
-      database : process.env.DB_NAME
-    },
-    pool: {
-      min: 2,
-      max: 10
+      connectionString: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false },
     },
     migrations: {
       tableName: "knex_migrations"
@@ -44,21 +30,13 @@ module.exports = {
   },
 
   production: {
-    client: "postgresql",
+    client: "pg",
     connection: {
-      host : process.env.DB_HOST,
-      user : process.env.DB_USER,
-      password : process.env.DB_PASS,
-      database : process.env.DB_NAME,
-      ssl: true
-    },
-    pool: {
-      min: 2,
-      max: 10
+      connectionString: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false },
     },
     migrations: {
       tableName: "knex_migrations"
     }
   }
-
 };
