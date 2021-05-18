@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc --project ./",
     "dev": "nodemon",
-    "start": "node ./build/index.js --env=production",
+    "start": "npm run build && node ./build/index.js --env=production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
