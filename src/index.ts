@@ -18,6 +18,7 @@ const port: number = parseInt(process.env.PORT as string, 10);
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use("/api/menu/items", itemsRouter);
 app.use(errorHandler);
 app.use(notFoundHandler);
 
@@ -31,8 +32,6 @@ console.log(process.env.NODE_ENV)
 console.log(process.env.DB_HOST)
 
 app.use(express.static("build"))
-
-app.use("/api/menu/items", itemsRouter);
 
 // define a route handler for the default home page
 app.get( "/", ( req : any , res : any ) => {
