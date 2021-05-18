@@ -21,7 +21,7 @@ module.exports = {
     client: "pg",
     connection: {
       connectionString: process.env.DATABASE_URL,
-      ssl: { rejectUnauthorized: false },
+      ssl: false,
     },
     migrations: {
       tableName: "knex_migrations"
@@ -32,7 +32,7 @@ module.exports = {
     client: "pg",
     connection: {
       connectionString: process.env.DATABASE_URL,
-      ssl: { rejectUnauthorized: false },
+      ssl: false,
     },
     migrations: {
       tableName: "knex_migrations"
