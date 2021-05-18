@@ -2,6 +2,10 @@ console.log('db')
 console.log(process.env.NODE_ENV)
 console.log(process.env.DB_HOST)
 
+const pg = require('pg');
+pg.defaults.ssl = true;
+
+
 const knex = require('knex')({
   client: 'pg',
   connection: {
