@@ -22,6 +22,7 @@ app.get('/test', async (req: any, res: any) => {
     const result = await knex
         .select('first_name')
         .from('users')
+        
     res.json({
         users: result
     });
