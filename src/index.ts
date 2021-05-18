@@ -1,8 +1,15 @@
-import knex from './db'
-
 const express = require( "express" );
 const app = express();
 const port = 8080; // default port to listen
+
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
+import knex from './db'
+
+console.log(process.env.NODE_ENV)
+console.log(process.env.DB_HOST)
 
 app.use(express.static("build"))
 

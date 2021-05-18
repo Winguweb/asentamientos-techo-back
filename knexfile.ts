@@ -1,14 +1,25 @@
 // Update with your config settings.
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config();
+// }
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
+console.log('config')
+console.log(process.env.NODE_ENV)
+console.log(process.env.DB_HOST)
 
 module.exports = {
 
   development: {
     client: "postgresql",
     connection: {
-      host : '127.0.0.1',
-      user : 'postgres',
-      password : '',
-      database : 'techo'
+      host : process.env.DB_HOST,
+      user : process.env.DB_USER,
+      password : process.env.DB_PASS,
+      database : process.env.DB_NAME
     },
     pool: {
       min: 2,
@@ -22,9 +33,10 @@ module.exports = {
   staging: {
     client: "postgresql",
     connection: {
-      database: "my_db",
-      user: "username",
-      password: "password"
+      host : process.env.DB_HOST,
+      user : process.env.DB_USER,
+      password : process.env.DB_PASS,
+      database : process.env.DB_NAME
     },
     pool: {
       min: 2,
@@ -38,9 +50,10 @@ module.exports = {
   production: {
     client: "postgresql",
     connection: {
-      database: "my_db",
-      user: "username",
-      password: "password"
+      host : process.env.DB_HOST,
+      user : process.env.DB_USER,
+      password : process.env.DB_PASS,
+      database : process.env.DB_NAME
     },
     pool: {
       min: 2,
