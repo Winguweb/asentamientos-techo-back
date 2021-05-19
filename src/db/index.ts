@@ -1,20 +1,14 @@
 console.log('db')
 console.log(process.env.NODE_ENV)
-console.log(process.env.DB_HOST)
-
-const pg = require('pg');
-pg.defaults.ssl = true;
+console.log(process.env.DATABASE_URL)
 
 
-const knex = require('knex')({
-  client: 'pg',
-  connection: {
-    host : process.env.DB_HOST,
-    user : process.env.DB_USER,
-    password : process.env.DB_PASS,
-    database : process.env.DB_NAME
-  }
-});
+const environment = process.env.ENVIRONMENT || 'development'
+const config = require('../../knexfile.ts')[environment];
+const knex = require('knex')(config);
 
+if (process.env.NODE_ENV === 'staging') {
+  knex.migrate.latest([config]);
+}
 
 export default knex
