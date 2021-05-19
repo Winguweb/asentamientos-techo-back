@@ -1,14 +1,12 @@
 import express, { Request, Response } from 'express';
-import * as ItemService from '../../services/items.service';
-import { BaseItem, Item } from '../../interfaces/items/item.interface'
+import * as ItemService from '../services/items.service';
+import { BaseItem, Item } from '../interfaces/items/item.interface'
 import { checkJwt } from '../middleware/authz.middleware';
-import { checkPermissions } from "../middleware/permissions.middleware";
-import { ItemPermission } from "../../enums/item-permission";
 
-export const itemsRouter = express.Router();
+export const usersRouter = express.Router();
 
 // GET items
-itemsRouter.get('/', async(req: Request, res: Response) => {
+usersRouter.get('/', async(req: Request, res: Response) => {
   try {
     const items: Item[] = await ItemService.findAll();    
 
@@ -22,7 +20,7 @@ itemsRouter.get('/', async(req: Request, res: Response) => {
 })
 
 // GET items/:id
-itemsRouter.get('/:id', async(req: Request, res: Response) => {
+usersRouter.get('/:id', async(req: Request, res: Response) => {
 
   const id: number = parseInt(req.params.id, 10)
 
@@ -40,12 +38,11 @@ itemsRouter.get('/:id', async(req: Request, res: Response) => {
   }
 })
 
-itemsRouter.use(checkJwt);
+usersRouter.use(checkJwt);
 
 // POST items
-itemsRouter.post(
+usersRouter.post(
   "/",
-  checkPermissions(ItemPermission.CreateItems),
   async (req: Request, res: Response) => {
     try {
       const item: BaseItem = req.body;
@@ -60,9 +57,8 @@ itemsRouter.post(
 );
 
 // PUT items/:id
-itemsRouter.put(
+usersRouter.put(
   "/:id",
-  checkPermissions(ItemPermission.UpdateItems),
   async (req: Request, res: Response) => {
     const id: number = parseInt(req.params.id, 10);
 
@@ -86,9 +82,8 @@ itemsRouter.put(
 );
 
 // DELETE items/:id
-itemsRouter.delete(
+usersRouter.delete(
   "/:id",
-  checkPermissions(ItemPermission.DeleteItems),
   async (req: Request, res: Response) => {
     try {
       const id: number = parseInt(req.params.id, 10);

@@ -3,9 +3,10 @@ const app = express();
 const dotenv = require('dotenv');
 const cors = require('cors');
 const helmet = require('helmet');
-const { itemsRouter } = require('./api/routes/items.router')
-const { errorHandler } = require('./api/middleware/error.middleware');
-const { notFoundHandler } = require('./api/middleware/not-found.middleware');
+const { itemsRouter } = require('./routes/items.router');
+const { usersRouter } = require('./routes/users.router');
+const { errorHandler } = require('./middleware/error.middleware');
+const { notFoundHandler } = require('./middleware/not-found.middleware');
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use("/api/menu/items", itemsRouter);
+app.use('/login', usersRouter)
 app.use(errorHandler);
 app.use(notFoundHandler);
 
