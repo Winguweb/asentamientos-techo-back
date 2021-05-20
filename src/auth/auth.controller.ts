@@ -49,9 +49,14 @@ export const signin = async (req: Request, res: Response) => {
 
   if(user.length === 0) return res.status(400).json('Invalid email.')
 
-  const correctPassword = await knex('users').where({ password: req.body.password })
+  // Para user[0].password tener en cuenta que la db devuelve un array con 1 solo objeto.
+  const validatePassword = async (password: string): Promise<boolean> => {
+    return await bcrypt.compare(password, user[0].password)
+  }
 
-  if(correctPassword.length === 0 ) return res.status(400).json('Invalid password')
+  const correctPassword: boolean = await validatePassword(req.body.password)
+
+  if(!correctPassword) return res.status(400).json('Invalid password')
 
   // Para user[0].id tener en cuenta que la db devuelve un array con 1 solo objeto.
   const token: string = jwt.sign({ id: user[0].id }, secretKey, {
