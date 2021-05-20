@@ -58,7 +58,7 @@ export const signin = async (req: Request, res: Response) => {
     expiresIn: 60 * 60 * 24 * 30
   });
 
-  res.header('Authorization', token).json('Succesfully signed up.');
+  res.header('Authorization', token).json({ token: token });
 }
 
 // Profile
