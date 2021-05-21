@@ -1,6 +1,6 @@
 
 import express from 'express';
-import knex from '../db/index'
+import knex from '../db'
 
 export const testRouter = express.Router();
 

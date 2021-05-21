@@ -1,16 +1,17 @@
 import { Request, Response } from 'express';
-import knex from '../db/index';
+import knex from '../db';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
-import { CustomRequest } from '../interfaces/custom/customRequest'
+import { User } from '../interfaces/users/users.interface';
 
 // Signup
 export const signup = async (req: Request, res: Response) => {
-  const secretKey: string = process.env.SECRET_KEY;
+
+  const secretKey: string = process.env.SECRET_KEY!;
 
   const encryptPassword = async (password: string): Promise<string> => {
-    const salt = await bcrypt.genSalt(10)
+    const salt: string = await bcrypt.genSalt(10)
     return await bcrypt.hash(password, salt)
   }
 
@@ -25,7 +26,7 @@ export const signup = async (req: Request, res: Response) => {
       .from('users')
       .where('username', req.body.username)
       .andWhere('email', req.body.email)
-      .then(userNametList => {
+      .then((userNametList: User[]) => {
         if (userNametList.length === 0) {
             res.json(newUser)
             return knex('users').insert(newUser)
@@ -43,7 +44,7 @@ export const signup = async (req: Request, res: Response) => {
 // Signin
 export const signin = async (req: Request, res: Response) => {
 
-  const secretKey: string = process.env.SECRET_KEY
+  const secretKey: string = process.env.SECRET_KEY!
 
   const user = await knex('users').where({ email: req.body.email })
 
@@ -63,13 +64,11 @@ export const signin = async (req: Request, res: Response) => {
     expiresIn: 60 * 60 * 24 * 30
   });
 
-  res.header('Authorization', token).json({ token: token });
+  res.header('Authorization', token).status(200).json({ token: token });
 }
 
 // Profile
-export const profile = async (customReq: Request, res: Response) => {
-
-  const req = customReq as CustomRequest;
+export const profile = async (req: Request, res: Response) => {
 
   const user = await knex
     .select('id', 'email', 'username')
