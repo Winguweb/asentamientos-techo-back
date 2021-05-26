@@ -17,17 +17,15 @@ export const signup = async (req: Request, res: Response) => {
 
   const newUser = {
     email: req.body.email,
-    username: req.body.username,
     password: await encryptPassword(req.body.password)
   }
 
   const savedUser = knex
-      .select('username')
+      .select('email')
       .from('users')
-      .where('username', req.body.username)
-      .andWhere('email', req.body.email)
-      .then((userNametList: User[]) => {
-        if (userNametList.length === 0) {
+      .where('email', req.body.email)
+      .then((usersList: User[]) => {
+        if (usersList.length === 0) {
             res.json(newUser)
             return knex('users').insert(newUser)
         }
