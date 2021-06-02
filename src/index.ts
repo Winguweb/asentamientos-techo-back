@@ -11,6 +11,7 @@ const { settlementsRouter } = require("./routes/settlements.router");
 
 const { errorHandler } = require('./middleware/error.middleware');
 const { notFoundHandler } = require('./middleware/not-found.middleware');
+const { covidRouter } = require('./routes/covid.router')
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use(express.json());
 app.use('/auth', authRouter);
 app.use('/settlements', settlementsRouter);
 app.use("/test", testRouter);
+app.use('/covid', covidRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);
