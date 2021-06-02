@@ -1,10 +1,14 @@
+
 const express = require( "express" );
 const app = express();
 const dotenv = require('dotenv');
 const cors = require('cors');
 const helmet = require('helmet');
+
 const { testRouter } = require('./routes/test.router');
 const { authRouter } = require('./routes/auth.router')
+const { settlementsRouter } = require("./routes/settlements.router");
+
 const { errorHandler } = require('./middleware/error.middleware');
 const { notFoundHandler } = require('./middleware/not-found.middleware');
 
@@ -22,6 +26,7 @@ app.use(express.json());
 
 // Routes
 app.use('/auth', authRouter);
+app.use('/settlements', settlementsRouter);
 app.use("/test", testRouter);
 
 app.use(errorHandler);
