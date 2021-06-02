@@ -57,11 +57,8 @@ export const store = async (req: Request, res: Response) => {
           date: req.body.year
         }
       );
-  
-    console.log(pollId)
-    console.log(req.body)
 
-    const data : any = req.body.data;
+    const data : Array<object> = req.body.data;
     data.forEach(async (d : any) => {
       let generalData : any = d.generalData;
       generalData['poll_id'] = pollId[0];
