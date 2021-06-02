@@ -24,8 +24,8 @@ export const signup = async (req: Request, res: Response) => {
       .select('email')
       .from('users')
       .where('email', req.body.email)
-      .then((usersList: User[]) => {
-        if (usersList.length === 0) {
+      .then((userNametList: User[]) => {
+        if (userNametList.length === 0) {
             res.json(newUser)
             return knex('users').insert(newUser)
         }
@@ -59,7 +59,7 @@ export const signin = async (req: Request, res: Response) => {
 
   // Para user[0].id tener en cuenta que la db devuelve un array con 1 solo objeto.
   const token: string = jwt.sign({ id: user[0].id }, secretKey, {
-    expiresIn: 60 * 60 * 24 * 30
+    expiresIn: 60 * 60 * 24
   });
 
   res.header('Authorization', token).status(200).json({ token: token });
@@ -69,7 +69,7 @@ export const signin = async (req: Request, res: Response) => {
 export const profile = async (req: Request, res: Response) => {
 
   const user = await knex
-    .select('id', 'email', 'username')
+    .select('id', 'email')
     .from('users')
     .where({ id: req.userId })
 
