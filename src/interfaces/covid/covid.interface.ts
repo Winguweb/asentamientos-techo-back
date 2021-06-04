@@ -2,6 +2,16 @@
 export interface ICovid {
   readonly id: number;
   settlement_id: number;
+  country?: string;
+  province?: string;
+  municipality?: string;
+  name?: string;
+  location?: string;
+  latitude?: string;
+  longitude?: string;
+  altitude?: string;
+  precision?: string;
+  life_altered?: string;
   employment_before_quarentine?: string;
   other_employment_before_quarentine?: string;
   employment_status?: string;
