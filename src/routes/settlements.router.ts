@@ -1,7 +1,8 @@
 import express from 'express';
-import { store } from '../controllers/settlements.controller';
+import { store, index } from '../controllers/settlements.controller';
 
 
 export const settlementsRouter = express.Router();
 
 settlementsRouter.post('/', store);
+settlementsRouter.get('/', index);
