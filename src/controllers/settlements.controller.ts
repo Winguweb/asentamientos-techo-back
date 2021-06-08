@@ -4,6 +4,26 @@ import knex from '../db';
 // import { User } from '../interfaces/users/users.interface';
 // Profile
 
+// GET
+export const read = async (req: Request, res: Response) => {
+  const result = await knex
+    .select('*')
+    .from('settlements')
+        
+  res.json({
+      data: result
+  });
+}
+
+export const index = async(req: Request, res: Response) => {
+  const covidSettlements = await knex('settlements')
+    .join('covid', 'settlements.settlement_id', '=', 'covid.settlement_id')
+
+  res.json({
+    data: covidSettlements
+  })
+}
+
 const cleanPoll = async(pollYear : string) => {
   try {
     const poll : Array<any>  = await knex('polls')
@@ -58,10 +78,14 @@ export const store = async (req: Request, res: Response) => {
         }
       );
 
+    console.log(pollId[0]);
+
     const data : Array<object> = req.body.data;
     data.forEach(async (d : any) => {
       let generalData : any = d.generalData;
-      generalData['poll_id'] = pollId[0];
+      // generalData['poll_id'] = pollId[0];
+
+      console.log(d);
 
       const settlementId : Array<string> = await knex('settlements')
         .returning('id')
