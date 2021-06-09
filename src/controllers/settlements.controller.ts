@@ -4,6 +4,26 @@ import knex from '../db';
 // import { User } from '../interfaces/users/users.interface';
 // Profile
 
+// GET
+export const read = async (req: Request, res: Response) => {
+  const result = await knex
+    .select('*')
+    .from('settlements')
+        
+  res.json({
+      data: result
+  });
+}
+
+export const covid = async(req: Request, res: Response) => {
+  const covidSettlements = await knex('settlements')
+    .join('covid', 'settlements.settlement_id', '=', 'covid.settlement_id')
+
+  res.json({
+    data: covidSettlements
+  })
+}
+
 const cleanPoll = async(pollYear : string) => {
   try {
     const poll : Array<any>  = await knex('polls')
