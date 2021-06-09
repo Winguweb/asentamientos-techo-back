@@ -78,8 +78,6 @@ export const store = async (req: Request, res: Response) => {
         }
       );
 
-    console.log(pollId[0]);
-
     const data : Array<object> = req.body.data;
     data.forEach(async (d : any) => {
       let generalData : any = d.generalData;
