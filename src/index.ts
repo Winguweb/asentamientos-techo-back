@@ -8,6 +8,7 @@ const helmet = require('helmet');
 const { testRouter } = require('./routes/test.router');
 const { authRouter } = require('./routes/auth.router')
 const { settlementsRouter } = require("./routes/settlements.router");
+const { searchRouter } = require('./routes/search.router')
 const { pollsRouter } = require('./routes/polls.router');
 
 const { errorHandler } = require('./middleware/error.middleware');
@@ -30,6 +31,7 @@ app.use('/auth', authRouter);
 app.use('/settlements', settlementsRouter);
 app.use('/polls', pollsRouter);
 app.use("/test", testRouter);
+app.use('/search', searchRouter)
 
 app.use(errorHandler);
 app.use(notFoundHandler);

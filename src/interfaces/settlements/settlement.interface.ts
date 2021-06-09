@@ -1,4 +1,4 @@
-export interface Settlement {
+export default interface Settlement {
   readonly id: number;
   country?: string;
   province?: string;
