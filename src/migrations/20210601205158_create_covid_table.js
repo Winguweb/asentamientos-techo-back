@@ -6,11 +6,6 @@ exports.up = function(knex) {
       table.string('province', 500);
       table.string('municipality', 500);
       table.string('name', 500);
-      table.string('location', 500);
-      table.string('latitude', 500);
-      table.string('longitude', 500);
-      table.string('altitude', 500);
-      table.string('precision', 500);
       table.string('life_altered', 500);
       table.string('employment_before_quarentine', 500);
       table.string('other_employment_before_quarentine', 500); // Ver
