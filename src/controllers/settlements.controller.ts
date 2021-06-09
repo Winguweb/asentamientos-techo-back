@@ -83,9 +83,7 @@ export const store = async (req: Request, res: Response) => {
     const data : Array<object> = req.body.data;
     data.forEach(async (d : any) => {
       let generalData : any = d.generalData;
-      // generalData['poll_id'] = pollId[0];
-
-      console.log(d);
+      generalData['poll_id'] = pollId[0];
 
       const settlementId : Array<string> = await knex('settlements')
         .returning('id')
