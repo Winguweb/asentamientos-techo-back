@@ -97,3 +97,22 @@ export const store = async (req: Request, res: Response) => {
 
   res.json();
 }
+
+export const index = async (req: Request, res: Response) => {
+  try {     
+    const poll_id = req.query.poll
+    const settlements : Object = await knex('settlements')
+      .join('settlement_features', 'settlements.id', '=', 'settlement_features.settlement_id')
+      .join('settlement_issues', 'settlements.id', '=', 'settlement_issues.settlement_id')
+      .join('settlement_communities', 'settlements.id', '=', 'settlement_communities.settlement_id')
+      .join('settlement_public_services', 'settlements.id', '=', 'settlement_public_services.settlement_id')
+      .where('settlements.poll_id', poll_id)
+
+    res.json(settlements);
+  } catch (err: any) {
+    console.log('there was an error');
+    console.log(err)
+    res.json(err)
+  }  
+}
+
