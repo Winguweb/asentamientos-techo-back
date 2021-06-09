@@ -35,3 +35,13 @@ export const create = async (req: Request, res: Response) => {
     }
   res.json();
 }
+
+export const exportCovid = async (req: Request, res: Response) => {
+  const result = await knex
+    .select('*')
+    .from('covid')
+
+  res.json({
+      data: result
+  });
+}
