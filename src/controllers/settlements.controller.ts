@@ -15,13 +15,13 @@ export const read = async (req: Request, res: Response) => {
   });
 }
 
-export const covid = async(req: Request, res: Response) => {
-  const covidSettlements = await knex('settlements')
+export const covidSettls = async(req: Request, res: Response) => {
+  const poll_id = req.query.poll;
+  const covidSettlements : Object = await knex('settlements')
     .join('covid', 'settlements.settlement_id', '=', 'covid.settlement_id')
+    .where('settlements.poll_id', poll_id)
 
-  res.json({
-    data: covidSettlements
-  })
+  res.json(covidSettlements)
 }
 
 const cleanPoll = async(pollYear : string) => {
