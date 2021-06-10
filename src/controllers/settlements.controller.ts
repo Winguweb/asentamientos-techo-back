@@ -16,12 +16,25 @@ export const read = async (req: Request, res: Response) => {
 }
 
 export const covidSettls = async(req: Request, res: Response) => {
-  const poll_id = req.query.poll;
-  const covidSettlements : Object = await knex('settlements')
-    .join('covid', 'settlements.settlement_id', '=', 'covid.settlement_id')
-    .where('settlements.poll_id', poll_id)
+  const covidMarkers : Object = await knex('covid')
+    .distinctOn('covid.settlement_id')
+    .select(
+      'settlements.latitud as settlement_latitude', 
+      'settlements.longitude as settlement_longitude', 
+      'covid.name',
+      'covid.settlement_id',
+      'covid.latitude as covid_latitude', 
+      'covid.longitude as covid_longitude', 
+    )    
+    .leftJoin('settlements', 'covid.settlement_id', '=', 'settlements.settlement_id')
 
-  res.json(covidSettlements)
+  const covidData : Object = await knex('covid')
+
+
+  res.json({
+    covidData: covidData,
+    covidMarkers: covidMarkers,
+  })
 }
 
 const cleanPoll = async(pollYear : string) => {
