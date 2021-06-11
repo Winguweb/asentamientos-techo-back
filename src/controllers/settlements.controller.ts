@@ -132,11 +132,9 @@ export const store = async (req: Request, res: Response) => {
 }
 
 export const index = async (req: Request, res: Response) => {
-  try {     
-    console.log(req.query)
-    const poll_id = req.query.poll
-    
-    const settlements : Object = await knex('settlements')
+  try {         
+    const settlements : Object = await knex.select('settlements.id as base_id', 'settlements.settlement_id as base_settlement_id', 'settlements.*', 'settlement_features.*', 'settlement_issues.*', 'settlement_communities.*', 'settlement_public_services.*')
+      .from('settlements')
       .join('settlement_features', 'settlements.id', '=', 'settlement_features.settlement_id')
       .join('settlement_issues', 'settlements.id', '=', 'settlement_issues.settlement_id')
       .join('settlement_communities', 'settlements.id', '=', 'settlement_communities.settlement_id')

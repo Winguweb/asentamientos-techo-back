@@ -3,6 +3,15 @@ import knex from '../db';
 
 // import ICovid from '../interfaces/covid/covid.interface'
 
+const cleanPoll = async() => {
+  try {  
+    await knex('covid')
+      .del()      
+  } catch (err:any){
+    console.log('e', err)
+  }  
+}
+
 // GET
 export const read = async (req: Request, res: Response) => {
   const result = await knex
@@ -14,14 +23,18 @@ export const read = async (req: Request, res: Response) => {
   });
 }
 
-const cleanPoll = async() => {
-  try {  
-    await knex('covid')
-      .del()      
-  } catch (err:any){
-    console.log('e', err)
-  }  
+
+export const show = async (req: Request, res: Response) => {
+  const result = await knex
+    .select('*')
+    .from('covid')
+    .where('settlement_id', req.query.settlement_id)
+        
+  res.json({
+      data: result
+  });
 }
+
 
 // POST
 export const create = async (req: Request, res: Response) => {
