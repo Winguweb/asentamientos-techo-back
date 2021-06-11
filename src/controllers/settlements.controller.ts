@@ -133,13 +133,20 @@ export const store = async (req: Request, res: Response) => {
 
 export const index = async (req: Request, res: Response) => {
   try {     
+    console.log(req.query)
     const poll_id = req.query.poll
+    
     const settlements : Object = await knex('settlements')
       .join('settlement_features', 'settlements.id', '=', 'settlement_features.settlement_id')
       .join('settlement_issues', 'settlements.id', '=', 'settlement_issues.settlement_id')
       .join('settlement_communities', 'settlements.id', '=', 'settlement_communities.settlement_id')
       .join('settlement_public_services', 'settlements.id', '=', 'settlement_public_services.settlement_id')
-      .where('settlements.poll_id', poll_id)
+      .where((builder: any) => {
+        Object.keys(req.query).forEach(element => {
+          builder.whereIn(element, req.query[element])          
+        });
+      })
+
 
     res.json(settlements);
   } catch (err: any) {

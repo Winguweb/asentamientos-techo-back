@@ -14,9 +14,21 @@ export const read = async (req: Request, res: Response) => {
   });
 }
 
+const cleanPoll = async() => {
+  try {  
+    await knex('covid')
+      .del()      
+  } catch (err:any){
+    console.log('e', err)
+  }  
+}
+
 // POST
 export const create = async (req: Request, res: Response) => {
   try {
+    
+    cleanPoll();
+
     const data : Array<object> = req.body.data;
     
     data.forEach(async (d: any) => {
