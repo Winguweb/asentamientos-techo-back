@@ -16,6 +16,7 @@ export const read = async (req: Request, res: Response) => {
 }
 
 export const covidSettls = async(req: Request, res: Response) => {
+  console.log(req.query)
   const covidMarkers : Object = await knex('covid')
     .distinctOn('covid.settlement_id')
     .select(
@@ -25,8 +26,14 @@ export const covidSettls = async(req: Request, res: Response) => {
       'covid.settlement_id',
       'covid.latitude as covid_latitude', 
       'covid.longitude as covid_longitude', 
+      'covid.country'
     )    
     .leftJoin('settlements', 'covid.settlement_id', '=', 'settlements.settlement_id')
+    .where((builder: any) => {
+      Object.keys(req.query).forEach(element => {
+        builder.whereIn(element, req.query[element])          
+      });
+    })
 
   const covidData : Object = await knex('covid')
 
