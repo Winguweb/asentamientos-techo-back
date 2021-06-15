@@ -32,8 +32,8 @@ app.use('/auth', authRouter);
 app.use('/settlements', settlementsRouter);
 app.use('/polls', pollsRouter);
 app.use("/test", testRouter);
-app.use('/covid', covidRouter);
 app.use('/search', searchRouter)
+app.use('/covid', covidRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);
