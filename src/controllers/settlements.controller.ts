@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import knex from '../db';
 
-// import { User } from '../interfaces/users/users.interface';
 // Profile
 
 // GET
@@ -16,7 +15,6 @@ export const read = async (req: Request, res: Response) => {
 }
 
 export const covidSettls = async(req: Request, res: Response) => {
-  console.log(req.query)
   const covidMarkers : Object = await knex('covid')
     .distinctOn('covid.settlement_id')
     .select(
@@ -35,11 +33,11 @@ export const covidSettls = async(req: Request, res: Response) => {
       });
     })
 
-  const covidData : Object = await knex('covid')
+  // const covidData : Object = await knex('covid')
 
 
   res.json({
-    covidData: covidData,
+    // covidData: covidData,
     covidMarkers: covidMarkers,
   })
 }
