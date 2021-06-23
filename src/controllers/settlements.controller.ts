@@ -24,7 +24,8 @@ export const covidSettls = async(req: Request, res: Response) => {
       'covid.settlement_id',
       'covid.latitude as covid_latitude', 
       'covid.longitude as covid_longitude', 
-      'covid.country'
+      'covid.country',
+      'covid.province'
     )    
     .leftJoin('settlements', 'covid.settlement_id', '=', 'settlements.settlement_id')
     .where((builder: any) => {
