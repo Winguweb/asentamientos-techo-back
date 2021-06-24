@@ -4,6 +4,8 @@ exports.up = function(knex) {
        table.increments('id');
        table.string('migrant_population', 255);
        table.string('migrant_type', 255);
+       table.string('returned_migrants', 255);
+       table.string('country_people_returned', 255);
        table.string('walls_material', 255);
        table.string('roofs_material', 255);
        table.string('floors_material', 255);

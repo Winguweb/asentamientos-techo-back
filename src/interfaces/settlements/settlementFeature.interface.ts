@@ -2,6 +2,8 @@ export interface SettlementFeature {
   readonly id: number;
   migrand_population?: string;
   migrant_type?: string;
+  returned_migrants?: string;
+  country_people_returned?: string;
   walls_material?: string;
   roofs_material?: string;
   water_access?: string;
