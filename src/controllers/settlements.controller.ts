@@ -139,12 +139,20 @@ export const store = async (req: Request, res: Response) => {
 
 export const index = async (req: Request, res: Response) => {
   try {         
-    const settlements : Object = await knex.select('settlements.id as base_id', 'settlements.settlement_id as base_settlement_id', 'settlements.*', 'settlement_features.*', 'settlement_issues.*', 'settlement_communities.*', 'settlement_public_services.*')
+    const settlements : Object = await knex.select(
+      'settlements.id as base_id', 
+      'settlements.settlement_id as base_settlement_id', 
+      'settlements.*', 
+      'settlement_features.*', 
+      'settlement_issues.*', 
+      'settlement_communities.*', 
+      'settlement_public_services.*'
+    )
       .from('settlements')
-      .join('settlement_features', 'settlements.id', '=', 'settlement_features.settlement_id')
-      .join('settlement_issues', 'settlements.id', '=', 'settlement_issues.settlement_id')
-      .join('settlement_communities', 'settlements.id', '=', 'settlement_communities.settlement_id')
-      .join('settlement_public_services', 'settlements.id', '=', 'settlement_public_services.settlement_id')
+      .leftJoin('settlement_features', 'settlements.id', '=', 'settlement_features.settlement_id')
+      .leftJoin('settlement_issues', 'settlements.id', '=', 'settlement_issues.settlement_id')
+      .leftJoin('settlement_communities', 'settlements.id', '=', 'settlement_communities.settlement_id')
+      .leftJoin('settlement_public_services', 'settlements.id', '=', 'settlement_public_services.settlement_id')
       .where((builder: any) => {
         Object.keys(req.query).forEach(element => {
           builder.whereIn(element, req.query[element])          
