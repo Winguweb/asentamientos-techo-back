@@ -42,9 +42,6 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
-console.log(process.env.NODE_ENV)
-console.log(process.env.DB_HOST)
-
 app.use(express.static("build"))
 
 // define a route handler for the default home page
