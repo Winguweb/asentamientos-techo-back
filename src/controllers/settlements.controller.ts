@@ -55,7 +55,8 @@ export const store = async (req: Request, res: Response) => {
         .returning('id')
         .insert(
           {
-            date: req.body.year
+            date: req.body.year,
+            last_update: req.body.lastUpdate || null
           }
         );
 
