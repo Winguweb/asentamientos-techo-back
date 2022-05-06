@@ -24,3 +24,21 @@ export const destroy = async (req: Request, res: Response) => {
     res.json(err)
   }
 }
+
+export const updateDate = async (req: Request, res: Response) => {
+  try {
+    console.log(req.body)
+    await knex('polls')
+      .where('date', req.body.year)
+      .update({
+        last_update: req.body.lastUpdate
+      })
+
+    
+    // req.body.lastUpdate
+    res.json()
+  } catch (err: any){
+    console.log('there was an error');
+    res.json(err)
+  }
+}

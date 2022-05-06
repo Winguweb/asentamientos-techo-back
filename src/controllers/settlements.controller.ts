@@ -101,6 +101,27 @@ export const store = async (req: Request, res: Response) => {
 
 export const index = async (req: Request, res: Response) => {
   try {         
+    const settlements: Object = await knex.select(
+      'settlements.id as base_id',
+      'settlements.settlement_id as base_settlement_id',
+      'settlements.*'
+    ).from('settlements')
+      .where((builder: any) => {
+        Object.keys(req.query).forEach(element => {
+          builder.whereIn(element, req.query[element])          
+        });
+      })
+
+    res.json(settlements);
+  } catch (err: any) {
+    console.log('there was an error');
+    console.log(err)
+    res.json(err)
+  }  
+}
+
+export const getSettlementDetails = async(req: Request, res: Response) => {
+  try {         
     const settlements : Object = await knex.select(
       'settlements.id as base_id', 
       'settlements.settlement_id as base_settlement_id', 
@@ -115,11 +136,8 @@ export const index = async (req: Request, res: Response) => {
       .leftJoin('settlement_issues', 'settlements.id', '=', 'settlement_issues.settlement_id')
       .leftJoin('settlement_communities', 'settlements.id', '=', 'settlement_communities.settlement_id')
       .leftJoin('settlement_public_services', 'settlements.id', '=', 'settlement_public_services.settlement_id')
-      .where((builder: any) => {
-        Object.keys(req.query).forEach(element => {
-          builder.whereIn(element, req.query[element])          
-        });
-      })
+      .where('settlements.id', req.query['id'])
+      .first()
 
 
     res.json(settlements);
@@ -128,7 +146,7 @@ export const index = async (req: Request, res: Response) => {
     console.log(err)
     res.json(err)
   }  
-}
+} 
 
 export const exportSettlements = async (req: Request, res: Response) => {
   try {     
